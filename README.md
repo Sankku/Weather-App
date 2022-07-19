@@ -1,2 +1,4 @@
 # Weather-App
-Challenge 
+Wally Challenge 
+
+Inicializar proyecto con npm start
