@@ -1,12 +1,23 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const express = require("express");
+const app = express();
 const hbs = require("hbs");
 const bcrypt = require("bcrypt");
 const path = require("path");
-const app = express();
 
+/* const methodOverride = require("method-override"); */
+const flash = require("express-flash");
+const session = require("express-session");
 const passport = require("passport");
 const initializePassport = require("./passport-config");
-initializePassport(passport);
+initializePassport(
+  passport,
+  (email) => users.find((user) => user.email === email),
+  (id) => users.find((user) => user.id === id)
+);
 // Local variable instead of entire database
 const users = [];
 
@@ -24,22 +35,41 @@ app.set("view engine", "hbs");
 app.set("views", viewsPath);
 hbs.registerPartials(partialsPath);
 app.use(express.static(publicStaticDirPath));
+/* app.use(methodOverride("_method")); */
 
 app.use(express.urlencoded({ extended: false }));
+app.use(flash());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.get("/login", (req, res) => {
+app.get("/login", checkNotAuthenticated, (req, res) => {
   // Mostrar el formulario de Login
   res.render("login");
 });
 
-app.post("/login", (req, res) => {});
+app.post(
+  "/login",
+  checkNotAuthenticated,
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureFlash: true,
+  })
+);
 
-app.get("/register", (req, res) => {
+app.get("/register", checkNotAuthenticated, (req, res) => {
   // Mostrar el formulario de Login
   res.render("register");
 });
 
-app.post("/register", async (req, res) => {
+app.post("/register", checkNotAuthenticated, async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     users.push({
@@ -54,9 +84,30 @@ app.post("/register", async (req, res) => {
   }
 });
 
-app.get("/", (req, res) => {
+/* app.delete("/logout", (req, res) => {
+  req.logOut();
+  res.redirect("/login");
+}); */
+
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+
+  res.redirect("/login");
+}
+
+function checkNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect("/");
+  }
+  next();
+}
+
+app.get("/", checkAuthenticated, (req, res) => {
   res.render("index.hbs", {
     title: "Weather App",
+    name: req.user.name,
   });
 });
 

@@ -1,13 +1,16 @@
-<h1>Login</h1>
-<form action="/login" method="POST">
-    <div>
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
+<head>
+        <link rel="stylesheet" href="css/styles.css"/> <!-- static path for public folder is already set in app.js -->
+</head>
+<body>
+    <div class="inner-container">
+        <div class="box">
+            <form action="/login" method="POST">
+                <h1>Login</h1>
+                    <input type="email" placeholder="Email" id="email" name="email" required>
+                    <input type="password" placeholder="Password" id="password" name="password" required>
+                    <button type="submit">Login</button>
+                    <h3><a href="/register">Sign Up</a></h3>
+            </form>
+        </div>
     </div>
-    <div>
-        <label for="password">password</label>
-        <input type="password" id="password" name="password" required>
-    </div>
-    <button type="submit">Login</button>
-</form>
-<a href="/register">Register</a>
+</body>
