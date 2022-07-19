@@ -57,3 +57,39 @@ weatherForm.addEventListener("submit", (event) => {
     });
   });
 });
+
+const ol = document.querySelector("ol");
+const twitter = document.querySelector(".twitter");
+
+document.querySelector(".twitter").addEventListener("click", function () {
+  this.classList.toggle("active");
+
+  const text = search.value;
+
+  function resetAnim() {
+    twitter.classList.remove("active");
+  }
+
+  setTimeout(resetAnim, 1000);
+
+  if (text !== "") {
+    const li = document.createElement("li");
+    li.textContent = text;
+
+    ol.appendChild(li);
+    li.appendChild(addDeleteBtn());
+  }
+});
+
+function addDeleteBtn() {
+  const deleteBtn = document.createElement("button");
+
+  deleteBtn.textContent = "X";
+
+  deleteBtn.addEventListener("click", (e) => {
+    const item = e.target.parentElement;
+    ol.removeChild(item);
+  });
+
+  return deleteBtn;
+}

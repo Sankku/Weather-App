@@ -276,3 +276,66 @@ p a {
   outline: 0;
   padding: 22px 18px;
 }
+  
+.twitter-container {
+    position: absolute;
+    transform: translateY(-50%);
+    left: 28%;
+    right: 0;
+    margin: auto;
+    width: 60px;
+    height: 60px;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .twitter {
+    border: 0;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: url(https://abs.twimg.com/a/1450471907/img/t1/web_heart_animation.png) no-repeat;
+    background-position: 0 0;
+  }
+  
+  .twitter:hover {
+    background-position: -2800px 0;
+  }
+  
+  .twitter.active {
+    background-position: -2800px 0;
+    transition: background 1s steps(28);
+    animation: fave-twitter 1s steps(28);
+  }
+  
+  @keyframes fave-twitter {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: -2800px 0;
+    }
+  }
+
+
+  
+  .fav-list{
+    position: absolute;
+    top: 10%;
+    left: 110%;
+    height: 50px;
+    width: 200px;
+  }
+  
+  .fav-container{
+    position: absolute;
+    display: grid;
+  }
+
+  .fav-container ol {
+    margin-left: -15px;
+  }
