@@ -8,7 +8,7 @@ const hbs = require("hbs");
 const bcrypt = require("bcrypt");
 const path = require("path");
 
-/* const methodOverride = require("method-override"); */
+const methodOverride = require("method-override");
 const flash = require("express-flash");
 const session = require("express-session");
 const passport = require("passport");
@@ -35,7 +35,7 @@ app.set("view engine", "hbs");
 app.set("views", viewsPath);
 hbs.registerPartials(partialsPath);
 app.use(express.static(publicStaticDirPath));
-/* app.use(methodOverride("_method")); */
+app.use(methodOverride("_method"));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(flash());
@@ -84,10 +84,14 @@ app.post("/register", checkNotAuthenticated, async (req, res) => {
   }
 });
 
-/* app.delete("/logout", (req, res) => {
-  req.logOut();
-  res.redirect("/login");
-}); */
+app.delete("/logout", function (req, res, next) {
+  req.logOut(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/login");
+  });
+});
 
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {

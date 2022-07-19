@@ -37,6 +37,7 @@ h2 {
 }
 /******** Login and Register **************/
 
+
 .inner-container{
   width:400px;
   height:400px;
@@ -94,6 +95,23 @@ h2 {
 .box button:active{
   background:#25B562;
 }
+
+.log-out{
+  position: absolute;
+  width: 100%;
+}
+
+.log-out button{
+  margin-left: 95%;
+  background:#25B562;
+  border:0;
+  color:#fff;
+  padding:10px;
+  font-size:20px;
+  cursor:pointer;
+}
+
+
 /******** WEATHER APP **************/
 .main-content {
   flex-grow: 1;

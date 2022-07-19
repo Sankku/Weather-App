@@ -8,7 +8,7 @@
         <div class="main-content">
             {{>header}}
             <article class="widget">
-                <form class="weatherLocation"><input class="form__field" placeholder="location..." type="text"/><button type="submit" class="btn btn--primary btn--inside uppercase">Search</button>
+                <form action="" class="weatherLocation"><input class="form__field" placeholder="location..." type="text"/><button type="submit" class="btn btn--primary btn--inside uppercase">Search</button>
                 </form>
                 <div class="weatherIcon"><i class="wi wi-day-cloudy"></i></div>
                 <div class="weatherInfo">
@@ -23,6 +23,11 @@
         </div>
         <div class="container__item container__item--bottom">
 		<p>Made by <a href="https://www.linkedin.com/in/santiagogalaniz/" target="_blank">Santiago Alaniz</a>.</p>
+        </div>
+        <div class="log-out">
+            <form action="/logout?_method=DELETE" method="POST">
+                <button type="submit">Log Out</button>
+            </form> 
         </div>
         <script src="js/app.js"></script> <!-- absolute path -->
     </body>
